@@ -20,8 +20,8 @@ You need:
 Clone this repository and `cd` into the assignment you're working on:
 
 ```sh
-git clone git@github.com:tinkercademy-bootcamp/cplusplus-assignments.git
-cd cplusplus-assignments/assignment1
+git clone git@github.com:tinkercademy-bootcamp/2026-coding-labs.git
+cd 2026-coding-labs/assignment1
 ```
 
 Each assignment has its own `README.md` with build and run instructions. To pull updates later:

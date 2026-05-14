@@ -3,20 +3,44 @@ Assignment 1: Marriage Pact — short answers
 
 Q1. reserve vs resize — and the capacity you chose in get_applicants.
     YOUR ANSWER:
+reserve affects only the capacity of the vector, not the current size, that is, it enables you to allocate memory in advance.
+as a result of this, repeated push_back operations will not cause repeated reallocations.
+
+resize affects both the size and capacity(since it can't be less than size) of the vector, and fills new values with either the default or some specified value as the second argument.
+
+a good capacity to choose depends on the number of lines in the file/the size of the file.
+but if we don't measure size of the file - 100 is a good enough default.
 
 
 Q2. What does it mean for a std::ranges algorithm to take a projection?
     Give one example from your find_matches (or explain why a projection
     didn't help).
     YOUR ANSWER:
+a projection allows an std::ranges algorithm to apply transformations on the input elements before a comparison or predicate,
+instead of calling the transformation function in the comparison or predicate
+
+in my case, since i used std::ranges::copy_if, the projection initials allowed the predicate to simply compare the given initials with the target initials
+here, the transformation was handled by the projection rather than a function call in the predicate
 
 
 Q3. Iterator invalidation in run_mixer. Which strategy did you choose
     (erase-returns-next-iterator / indices / restart) and why?
     What specifically goes wrong with the naive approach?
     YOUR ANSWER:
+i used the erase-returns-next-iterator strategy because it seemed interesting to make use of stl logic to solve such a problem
+the indices method just seems tedious to write, while the restart method would be grossly inefficient
+
+with the naive approach, if the outer loop which captures the first element has a ++it clause, 
+then after calling std::vector::erase on the iterator it(in case of a match found),
+the iterator will become invalid and so doing ++it will result in undefined behaviour
+
+however my approach is still inefficient, because of the initials computation every single time we need to do a comparison
 
 
 Q4. at() vs []. When, if ever, would you reach for vec.at(i) over
     vec[i] in this assignment?
     YOUR ANSWER:
+since im not doing vector indexing anywhere in the assignment(using iterators instead), i wouldn't need to use vec.at(i) over vec[i]
+if however, somewhere(for example in run_mixer), if we wanted to access vector elements without writing our own checks for out-of-bounds access,
+then we could use vec.at(i) over vec[i]
+note that in this case, since a runtime_error being throw results in loop termination, the overhead of throwing the error has negligible effect on program performance

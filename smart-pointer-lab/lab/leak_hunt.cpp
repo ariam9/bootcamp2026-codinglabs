@@ -67,7 +67,16 @@ struct Resource {
 // then deletes it. But if the work throws, the delete is skipped.
 //
 // Your prediction: if x > 50, the heap-allocated Resource doesn't get freed, leading to a memory leak, so for x = 10, it's fine but not for x = 99
-// ASan symptom:    ___________________________________________________________
+
+// ASan symptom:
+// Direct leak of 48 byte(s) in 1 object(s) allocated from:
+// #0 0x7fcec8d2d341 in operator new(unsigned long) (/usr/lib/libasan.so.8+0x12d341) (BuildId: ee5fbab73143ab257a66a33afe0f038a4af7a74e)
+// #1 0x55558c69d637 in process_data(int) /mnt/data/dev/comps/bootcamp/bootcamp2026-codinglabs/smart-pointer-lab/lab/leak_hunt.cpp:80
+// #2 0x55558c69e463 in main /mnt/data/dev/comps/bootcamp/bootcamp2026-codinglabs/smart-pointer-lab/lab/leak_hunt.cpp:168
+// #3 0x7fcec7c27740  (/usr/lib/libc.so.6+0x27740) (BuildId: 020d6f7c33b2413f4fe10814c4729dce1387f049)
+// #4 0x7fcec7c27878 in __libc_start_main (/usr/lib/libc.so.6+0x27878) (BuildId: 020d6f7c33b2413f4fe10814c4729dce1387f049)
+// #5 0x55558c69d2d4 in _start (/mnt/data/dev/comps/bootcamp/bootcamp2026-codinglabs/smart-pointer-lab/lab/leak_hunt+0x1c2d4) (BuildId: c1ffe55fe80fa8d935dabbdc1959423a6b534eea)
+
 // Fix:             ___________________________________________________________
 // =============================================================================
 static void risky_work(int x) {
@@ -89,7 +98,40 @@ void process_data(int x) {
 // BUG B — shared_ptr reference cycle
 //
 // Your prediction: if a Publisher and Subscriber hold shared_ptr references to each other, then both of them won't get freed, since ref_count != 0
-// ASan symptom:    ___________________________________________________________
+
+// ASan symptom:
+// Indirect leak of 40 byte(s) in 1 object(s) allocated from:
+// #0 0x7fcec8d2d341 in operator new(unsigned long) (/usr/lib/libasan.so.8+0x12d341) (BuildId: ee5fbab73143ab257a66a33afe0f038a4af7a74e)
+// #1 0x55558c6aacc6 in std::__new_allocator<std::_Sp_counted_ptr_inplace<Subscriber, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) /usr/include/c++/16.1.1/bits/new_allocator.h:162
+// #2 0x55558c6a9061 in std::allocator<std::_Sp_counted_ptr_inplace<Subscriber, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long) /usr/include/c++/16.1.1/bits/allocator.h:206
+// #3 0x55558c6a9061 in std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<Subscriber, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<Subscriber, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) /usr/include/c++/16.1.1/bits/alloc_traits.h:638
+// #4 0x55558c6a9061 in std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<Subscriber, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<Subscriber, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<Subscriber, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) /usr/include/c++/16.1.1/bits/allocated_ptr.h:103
+// #5 0x55558c6a7d2c in std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<Subscriber, std::allocator<void>, int>(Subscriber*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, int&&) /usr/include/c++/16.1.1/bits/shared_ptr_base.h:1034
+// #6 0x55558c6a70d8 in std::__shared_ptr<Subscriber, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, int>(std::_Sp_alloc_shared_tag<std::allocator<void> >, int&&) /usr/include/c++/16.1.1/bits/shared_ptr_base.h:1812
+// #7 0x55558c6a5936 in std::shared_ptr<Subscriber>::shared_ptr<std::allocator<void>, int>(std::_Sp_alloc_shared_tag<std::allocator<void> >, int&&) /usr/include/c++/16.1.1/bits/shared_ptr.h:463
+// #8 0x55558c6a359d in std::shared_ptr<Subscriber> std::make_shared<Subscriber, int>(int&&) /usr/include/c++/16.1.1/bits/shared_ptr.h:1066
+// #9 0x55558c69da1d in run_pubsub() /mnt/data/dev/comps/bootcamp/bootcamp2026-codinglabs/smart-pointer-lab/lab/leak_hunt.cpp:123
+// #10 0x55558c69e4da in main /mnt/data/dev/comps/bootcamp/bootcamp2026-codinglabs/smart-pointer-lab/lab/leak_hunt.cpp:176
+// #11 0x7fcec7c27740  (/usr/lib/libc.so.6+0x27740) (BuildId: 020d6f7c33b2413f4fe10814c4729dce1387f049)
+// #12 0x7fcec7c27878 in __libc_start_main (/usr/lib/libc.so.6+0x27878) (BuildId: 020d6f7c33b2413f4fe10814c4729dce1387f049)
+// #13 0x55558c69d2d4 in _start (/mnt/data/dev/comps/bootcamp/bootcamp2026-codinglabs/smart-pointer-lab/lab/leak_hunt+0x1c2d4) (BuildId: c1ffe55fe80fa8d935dabbdc1959423a6b534eea)
+//
+// Indirect leak of 40 byte(s) in 1 object(s) allocated from:
+// #0 0x7fcec8d2d341 in operator new(unsigned long) (/usr/lib/libasan.so.8+0x12d341) (BuildId: ee5fbab73143ab257a66a33afe0f038a4af7a74e)
+// #1 0x55558c6aabf4 in std::__new_allocator<std::_Sp_counted_ptr_inplace<Publisher, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long, void const*) /usr/include/c++/16.1.1/bits/new_allocator.h:162
+// #2 0x55558c6a83d2 in std::allocator<std::_Sp_counted_ptr_inplace<Publisher, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >::allocate(unsigned long) /usr/include/c++/16.1.1/bits/allocator.h:206
+// #3 0x55558c6a83d2 in std::allocator_traits<std::allocator<std::_Sp_counted_ptr_inplace<Publisher, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >::allocate(std::allocator<std::_Sp_counted_ptr_inplace<Publisher, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&, unsigned long) /usr/include/c++/16.1.1/bits/alloc_traits.h:638
+// #4 0x55558c6a83d2 in std::__allocated_ptr<std::allocator<std::_Sp_counted_ptr_inplace<Publisher, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > > std::__allocate_guarded<std::allocator<std::_Sp_counted_ptr_inplace<Publisher, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> > >(std::allocator<std::_Sp_counted_ptr_inplace<Publisher, std::allocator<void>, (__gnu_cxx::_Lock_policy)2> >&) /usr/include/c++/16.1.1/bits/allocated_ptr.h:103
+// #5 0x55558c6a7866 in std::__shared_count<(__gnu_cxx::_Lock_policy)2>::__shared_count<Publisher, std::allocator<void>, int>(Publisher*&, std::_Sp_alloc_shared_tag<std::allocator<void> >, int&&) /usr/include/c++/16.1.1/bits/shared_ptr_base.h:1034
+// #6 0x55558c6a6d7c in std::__shared_ptr<Publisher, (__gnu_cxx::_Lock_policy)2>::__shared_ptr<std::allocator<void>, int>(std::_Sp_alloc_shared_tag<std::allocator<void> >, int&&) /usr/include/c++/16.1.1/bits/shared_ptr_base.h:1812
+// #7 0x55558c6a5756 in std::shared_ptr<Publisher>::shared_ptr<std::allocator<void>, int>(std::_Sp_alloc_shared_tag<std::allocator<void> >, int&&) /usr/include/c++/16.1.1/bits/shared_ptr.h:463
+// #8 0x55558c6a3427 in std::shared_ptr<Publisher> std::make_shared<Publisher, int>(int&&) /usr/include/c++/16.1.1/bits/shared_ptr.h:1066
+// #9 0x55558c69d97a in run_pubsub() /mnt/data/dev/comps/bootcamp/bootcamp2026-codinglabs/smart-pointer-lab/lab/leak_hunt.cpp:122
+// #10 0x55558c69e4da in main /mnt/data/dev/comps/bootcamp/bootcamp2026-codinglabs/smart-pointer-lab/lab/leak_hunt.cpp:176
+// #11 0x7fcec7c27740  (/usr/lib/libc.so.6+0x27740) (BuildId: 020d6f7c33b2413f4fe10814c4729dce1387f049)
+// #12 0x7fcec7c27878 in __libc_start_main (/usr/lib/libc.so.6+0x27878) (BuildId: 020d6f7c33b2413f4fe10814c4729dce1387f049)
+// #13 0x55558c69d2d4 in _start (/mnt/data/dev/comps/bootcamp/bootcamp2026-codinglabs/smart-pointer-lab/lab/leak_hunt+0x1c2d4) (BuildId: c1ffe55fe80fa8d935dabbdc1959423a6b534eea)
+
 // Fix:             ___________________________________________________________
 // =============================================================================
 struct Subscriber;

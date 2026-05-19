@@ -77,7 +77,7 @@ struct Resource {
 // #4 0x7fcec7c27878 in __libc_start_main (/usr/lib/libc.so.6+0x27878) (BuildId: 020d6f7c33b2413f4fe10814c4729dce1387f049)
 // #5 0x55558c69d2d4 in _start (/mnt/data/dev/comps/bootcamp/bootcamp2026-codinglabs/smart-pointer-lab/lab/leak_hunt+0x1c2d4) (BuildId: c1ffe55fe80fa8d935dabbdc1959423a6b534eea)
 
-// Fix:             ___________________________________________________________
+// Fix:             use unique_ptr to manage resource by RAII principles instead
 // =============================================================================
 static void risky_work(int x) {
     if (x > 50)
@@ -86,12 +86,11 @@ static void risky_work(int x) {
 }
 
 void process_data(int x) {
-    Resource* r = new Resource("process_data", x);
+    auto r =  std::make_unique<Resource>("process_data", x);
 
     risky_work(x);
 
     r->describe();
-    delete r;
 }
 
 // =============================================================================

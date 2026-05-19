@@ -46,7 +46,7 @@ struct Resource {
     int         value_;
 
     Resource(std::string label, int value)
-        : id_(next_id()), label_(std::move(label)), value_(value)
+    : id_(next_id()), label_(std::move(label)), value_(value)
     {
         std::cerr << "[Resource #" << id_ << " \"" << label_ << "\" val=" << value_ << "] born\n";
     }
@@ -82,7 +82,7 @@ void process_data(int x) {
     risky_work(x);
 
     r->describe();
-    delete r; 
+    delete r;
 }
 
 // =============================================================================
@@ -96,7 +96,7 @@ struct Subscriber;
 
 struct Publisher {
     int id_;
-    std::shared_ptr<Subscriber> subscriber_; 
+    std::shared_ptr<Subscriber> subscriber_;
 
     explicit Publisher(int id) : id_(id) {
         std::cerr << "[Publisher  #" << id_ << "] born\n";
@@ -126,30 +126,30 @@ void run_pubsub() {
     sub->publisher_  = pub;
 
     std::cerr << "  pub.use_count=" << pub.use_count()
-              << "  sub.use_count=" << sub.use_count() << "\n";
+    << "  sub.use_count=" << sub.use_count() << "\n";
 }
 
 // =============================================================================
 // BUG C — unique_ptr passed by value unnecessarily
 //
 // Your prediction: program will crash because of nullptr dereference(r holds nullptr after std::move is called on it)
-// Fix:             ___________________________________________________________
+// Fix:             don't std::move(r) to maintain its existence in use_resource, take const Resource& in print_resource instead, with Resource passed by reference
 //
 // Note: ASan won't catch this one — it's not a memory error, it's a logic
 // error. The log will show the resource dying at the wrong time.
 // =============================================================================
-void print_resource(std::unique_ptr<Resource> r) { 
+void print_resource(const Resource& resource) {
     std::cerr << "  print_resource: ";
-    r->describe();
+    resource.describe();
 }
 
 void use_resource() {
     auto r = std::make_unique<Resource>("use_resource", 77);
 
-    print_resource(std::move(r)); 
+    print_resource(*r);
 
     // What's the value of r now?
-    std::cerr << "  back in use_resource, value=" << r->value_ << "\n"; 
+    std::cerr << "  back in use_resource, value=" << r->value_ << "\n";
 }
 
 // =============================================================================

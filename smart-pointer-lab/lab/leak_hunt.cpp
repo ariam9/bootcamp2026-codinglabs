@@ -131,13 +131,13 @@ void process_data(int x) {
 // #12 0x7fcec7c27878 in __libc_start_main (/usr/lib/libc.so.6+0x27878) (BuildId: 020d6f7c33b2413f4fe10814c4729dce1387f049)
 // #13 0x55558c69d2d4 in _start (/mnt/data/dev/comps/bootcamp/bootcamp2026-codinglabs/smart-pointer-lab/lab/leak_hunt+0x1c2d4) (BuildId: c1ffe55fe80fa8d935dabbdc1959423a6b534eea)
 
-// Fix:             ___________________________________________________________
+// Fix:             use weak_ptr references inside Subscriber and Publisher, instead of shared_ptr references
 // =============================================================================
 struct Subscriber;
 
 struct Publisher {
     int id_;
-    std::shared_ptr<Subscriber> subscriber_;
+    std::weak_ptr<Subscriber> subscriber_;
 
     explicit Publisher(int id) : id_(id) {
         std::cerr << "[Publisher  #" << id_ << "] born\n";
@@ -149,7 +149,7 @@ struct Publisher {
 
 struct Subscriber {
     int id_;
-    std::shared_ptr<Publisher> publisher_;
+    std::weak_ptr<Publisher> publisher_;
 
     explicit Subscriber(int id) : id_(id) {
         std::cerr << "[Subscriber #" << id_ << "] born\n";

@@ -2,13 +2,14 @@
  * Assignment 2: Unique Pointer
  * Adapted by Tinkercademy from Stanford CS106L Assignment 7
  * (originally by Jacob Roberts-Baca).
- */
+*/
 
 #include <functional>
 #include <iostream>
 #include <sstream>
 #include <unordered_map>
 #include <vector>
+#include <ranges>
 
 #include "unique_ptr.h"
 
@@ -52,8 +53,16 @@ template <typename T> struct ListNode {
  * @return A `unique_ptr` to the head of the list.
  */
 template <typename T> cs106l::unique_ptr<ListNode<T>> create_list(const std::vector<T>& values) {
-  /* STUDENT TODO: Implement this method */
-  throw std::runtime_error("Not implemented: createList");
+  if (values.empty()) return nullptr;
+
+  cs106l::unique_ptr<ListNode<T>> curr = nullptr;
+  for (auto value : std::views::reverse(values)) {
+    cs106l::unique_ptr<ListNode<T>> temp = cs106l::make_unique<ListNode<T>>(value);
+    temp->next = std::move(curr);
+    curr = std::move(temp);
+  }
+
+  return curr;
 }
 
 /**

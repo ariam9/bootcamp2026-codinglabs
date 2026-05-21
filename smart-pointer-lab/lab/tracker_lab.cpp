@@ -159,11 +159,11 @@ public:
     Tracker(const Tracker& other) = delete;
     Tracker& operator=(const Tracker& other) = delete;
 
-    Tracker(Tracker&& other) : id_(next_id()), data_(std::move(other.data_)) {
+    Tracker(Tracker&& other) noexcept : id_(next_id()), data_(std::move(other.data_)) {
         std::cerr << id_ << " moved from " << other.id_;
     }
 
-    Tracker& operator=(Tracker&& other) {
+    Tracker& operator=(Tracker&& other) noexcept {
         if (this == &other) return *this;
         data_ = std::move(other.data_);
         std::cerr << id_ << " move assigned from " << other.id_ << std::endl;

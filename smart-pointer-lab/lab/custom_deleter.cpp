@@ -52,27 +52,37 @@
 //      (guard for null).
 //   2. Create a using-alias FilePtr = std::unique_ptr<FILE, decltype(closer)>.
 //      QUESTION: why decltype(closer) and not just `auto` or a named type?
+//auto can only be used at declaration time(to infer type), not here. a named type cannot be used for a lambda expression since they have some hidden compiler-given type(lambdas generate a functor which has its own type). so using decltype(closer), you can get the exact type of closer inside the template argument.
+//
 //   3. Write open_file(path, mode) — a factory that returns a FilePtr.
 //      QUESTION: why must we pass `closer` as the second constructor argument?
+//to define the custom deleter(which is supposed to fclose the FILE*, if it exists), closer must be passed as the second constructor argument
+//
 //   4. Use it: open a file, write to it, let the FilePtr go out of scope.
 //   5. Print sizeof(FilePtr).
 //      PREDICT before running: how does it compare to sizeof(FILE*)?
+//Fileptr is unique_ptr with a custom deleter(lambda with no closed over variables) -> 8 bytes(since lambda doesn't close over any variables?) - same as raw pointer
 // =============================================================================
 
 // TODO Part 1.1: define the lambda. It should be a non-capturing lambda that
 //                accepts a FILE* and calls std::fclose if the pointer is non-null.
 //                Log something like "fclose called on " + the FILE* address to cerr.
-// auto closer = [] (FILE* f) { ... };
+auto closer = [] (FILE* f) {
+    if (f) {
+        std::cerr << "fclose called on " << f << std::endl;
+        std::fclose(f);
+    }
+};
 
 // TODO Part 1.2: define the using-alias.
-// using FilePtr = std::unique_ptr<FILE, decltype(closer)>;
+using FilePtr = std::unique_ptr<FILE, decltype(closer)>;
 
 // TODO Part 1.3: implement the factory.
-// FilePtr open_file(const char* path, const char* mode) {
-//     FILE* raw = std::fopen(path, mode);
-//     if (!raw) throw std::runtime_error("fopen failed");
-//     return FilePtr(raw, closer);
-// }
+FilePtr open_file(const char* path, const char* mode) {
+    FILE* raw = std::fopen(path, mode);
+    if (!raw) throw std::runtime_error("fopen failed");
+    return FilePtr(raw, closer);
+}
 
 // ─── Part 1 main ────────────────────────────────────────────────────────────
 /*
@@ -188,10 +198,10 @@ int main() {
 */
 
 // ─── Placeholder main — uncomment Part 1 or Part 2 above ────────────────────
-int main() {
-    std::cerr << "Uncomment Part 1 or Part 2 main() and recompile.\n";
-    return 0;
-}
+// int main() {
+//     std::cerr << "Uncomment Part 1 or Part 2 main() and recompile.\n";
+//     return 0;
+// }
 
 // =============================================================================
 // EXPECTED OUTPUT (after both parts are uncommented and the TODOs are filled in)

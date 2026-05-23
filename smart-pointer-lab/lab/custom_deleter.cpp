@@ -131,6 +131,8 @@ int main() {
 //   1. Define struct CountingFileCloser with an int* member and operator()(FILE*).
 //      QUESTION: why an int* rather than an int? (Hint: we want multiple
 //                unique_ptrs to update the SAME counter.)
+//int* is needed to update the same counter, otherwise every functor will just update its own local copy(member), which is not suitable for our purposes
+//
 //   2. Create a using-alias CountedFilePtr = std::unique_ptr<FILE, CountingFileCloser>.
 //   3. Write open_counted(path, mode, counter) — a factory that takes the counter
 //      by reference and returns a CountedFilePtr.
@@ -138,30 +140,31 @@ int main() {
 //      staggered points (inner blocks), and confirm counter == 3 at the end.
 //   5. Print sizeof(CountedFilePtr).
 //      PREDICT before running: how does it compare to sizeof(FilePtr) from Part 1?
+//Fileptr is unique_ptr with a custom deleter(struct with an int* member) -> 8 bytes(for raw pointer) + 8 bytes(int* member in custom deleter) = 16 bytes(?)
 // =============================================================================
 
 // TODO Part 2.1: define the functor.
-// struct CountingFileCloser {
-//     int* close_count;
-//     void operator()(FILE* f) const {
-//         if (f) {
-//             std::fclose(f);
-//             ++*close_count;
-//             std::cerr << "fclose #" << *close_count << " on " << f << "\n";
-//         }
-//     }
-// };
+struct CountingFileCloser {
+    int* close_count;
+    void operator()(FILE* f) const {
+        if (f) {
+            std::cerr << "fclose #" << *close_count << " on " << f << "\n";
+            std::fclose(f);
+            ++*close_count;
+        }
+    }
+};
 
 // TODO Part 2.2: define the using-alias.
-// using CountedFilePtr = std::unique_ptr<FILE, CountingFileCloser>;
+using CountedFilePtr = std::unique_ptr<FILE, CountingFileCloser>;
 
 // TODO Part 2.3: implement the factory. The deleter instance must be constructed
 //                with a pointer to the caller's counter.
-// CountedFilePtr open_counted(const char* path, const char* mode, int& counter) {
-//     FILE* raw = std::fopen(path, mode);
-//     if (!raw) throw std::runtime_error("fopen failed");
-//     return CountedFilePtr(raw, CountingFileCloser{&counter});
-// }
+CountedFilePtr open_counted(const char* path, const char* mode, int& counter) {
+    FILE* raw = std::fopen(path, mode);
+    if (!raw) throw std::runtime_error("fopen failed");
+    return CountedFilePtr(raw, CountingFileCloser{&counter});
+}
 
 // ─── Part 2 main ────────────────────────────────────────────────────────────
 /*
@@ -198,10 +201,10 @@ int main() {
 */
 
 // ─── Placeholder main — uncomment Part 1 or Part 2 above ────────────────────
-// int main() {
-//     std::cerr << "Uncomment Part 1 or Part 2 main() and recompile.\n";
-//     return 0;
-// }
+int main() {
+    std::cerr << "Uncomment Part 1 or Part 2 main() and recompile.\n";
+    return 0;
+}
 
 // =============================================================================
 // EXPECTED OUTPUT (after both parts are uncommented and the TODOs are filled in)

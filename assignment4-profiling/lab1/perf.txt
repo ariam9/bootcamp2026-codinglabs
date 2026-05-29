@@ -1,0 +1,953 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 6K of event 'cycles:P'
+# Event count (approx.): 4423142652
+#
+# Children      Self  Command   Shared Object        Symbol                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
+# ........  ........  ........  ...................  .......................................................................................................................................................................................................................................................................................................................................................................................................................................................................
+#
+   100.00%     0.00%  grid_bfs  grid_bfs             [.] _start
+            |
+            ---_start
+               __libc_start_main@@GLIBC_2.34
+               __libc_start_call_main
+               main
+               |          
+               |--56.03%--compute_congestion_pressure(std::vector<int, std::allocator<int> > const&, int, int, int)
+               |          |          
+               |           --20.58%--next_pressure_value(int, int, int, int, int, int, int, int, int)
+               |          
+                --43.91%--run_all_requests(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<RouteRequest, std::allocator<RouteRequest> > const&, std::vector<int, std::allocator<int> >&)
+                          |          
+                           --43.90%--shortest_path_bfs(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, RouteRequest const&, std::vector<int, std::allocator<int> >&)
+                                     |          
+                                      --4.82%--el0t_64_sync
+                                                el0t_64_sync_handler
+                                                el0_da
+                                                |          
+                                                 --4.54%--do_mem_abort
+                                                           |          
+                                                            --4.53%--do_translation_fault
+                                                                      |          
+                                                                       --4.51%--do_page_fault
+                                                                                 |          
+                                                                                  --4.10%--handle_mm_fault
+                                                                                            |          
+                                                                                             --3.98%--__handle_mm_fault
+                                                                                                       |          
+                                                                                                        --3.93%--handle_pte_fault
+                                                                                                                  |          
+                                                                                                                   --3.79%--do_anonymous_page
+                                                                                                                             |          
+                                                                                                                             |--2.31%--alloc_anon_folio
+                                                                                                                             |          |          
+                                                                                                                             |           --1.82%--vma_alloc_zeroed_movable_folio
+                                                                                                                             |                     |          
+                                                                                                                             |                      --1.79%--vma_alloc_folio_noprof
+                                                                                                                             |                                |          
+                                                                                                                             |                                 --1.75%--folio_alloc_mpol_noprof
+                                                                                                                             |                                           alloc_pages_mpol
+                                                                                                                             |                                           |          
+                                                                                                                             |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                                                                             |                                                      |          
+                                                                                                                             |                                                       --1.62%--get_page_from_freelist
+                                                                                                                             |                                                                 |          
+                                                                                                                             |                                                                  --1.24%--__pi_clear_page
+                                                                                                                             |          
+                                                                                                                              --0.56%--folio_add_lru_vma
+                                                                                                                                        folio_add_lru
+                                                                                                                                        |          
+                                                                                                                                         --0.54%--__folio_batch_add_and_move
+                                                                                                                                                   folio_batch_move_lru
+
+   100.00%     0.00%  grid_bfs  libc.so.6            [.] __libc_start_main@@GLIBC_2.34
+            |
+            ---__libc_start_main@@GLIBC_2.34
+               __libc_start_call_main
+               main
+               |          
+               |--56.03%--compute_congestion_pressure(std::vector<int, std::allocator<int> > const&, int, int, int)
+               |          |          
+               |           --20.58%--next_pressure_value(int, int, int, int, int, int, int, int, int)
+               |          
+                --43.91%--run_all_requests(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<RouteRequest, std::allocator<RouteRequest> > const&, std::vector<int, std::allocator<int> >&)
+                          |          
+                           --43.90%--shortest_path_bfs(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, RouteRequest const&, std::vector<int, std::allocator<int> >&)
+                                     |          
+                                      --4.82%--el0t_64_sync
+                                                el0t_64_sync_handler
+                                                el0_da
+                                                |          
+                                                 --4.54%--do_mem_abort
+                                                           |          
+                                                            --4.53%--do_translation_fault
+                                                                      |          
+                                                                       --4.51%--do_page_fault
+                                                                                 |          
+                                                                                  --4.10%--handle_mm_fault
+                                                                                            |          
+                                                                                             --3.98%--__handle_mm_fault
+                                                                                                       |          
+                                                                                                        --3.93%--handle_pte_fault
+                                                                                                                  |          
+                                                                                                                   --3.79%--do_anonymous_page
+                                                                                                                             |          
+                                                                                                                             |--2.31%--alloc_anon_folio
+                                                                                                                             |          |          
+                                                                                                                             |           --1.82%--vma_alloc_zeroed_movable_folio
+                                                                                                                             |                     |          
+                                                                                                                             |                      --1.79%--vma_alloc_folio_noprof
+                                                                                                                             |                                |          
+                                                                                                                             |                                 --1.75%--folio_alloc_mpol_noprof
+                                                                                                                             |                                           alloc_pages_mpol
+                                                                                                                             |                                           |          
+                                                                                                                             |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                                                                             |                                                      |          
+                                                                                                                             |                                                       --1.62%--get_page_from_freelist
+                                                                                                                             |                                                                 |          
+                                                                                                                             |                                                                  --1.24%--__pi_clear_page
+                                                                                                                             |          
+                                                                                                                              --0.56%--folio_add_lru_vma
+                                                                                                                                        folio_add_lru
+                                                                                                                                        |          
+                                                                                                                                         --0.54%--__folio_batch_add_and_move
+                                                                                                                                                   folio_batch_move_lru
+
+   100.00%     0.00%  grid_bfs  libc.so.6            [.] __libc_start_call_main
+            |
+            ---__libc_start_call_main
+               main
+               |          
+               |--56.03%--compute_congestion_pressure(std::vector<int, std::allocator<int> > const&, int, int, int)
+               |          |          
+               |           --20.58%--next_pressure_value(int, int, int, int, int, int, int, int, int)
+               |          
+                --43.91%--run_all_requests(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<RouteRequest, std::allocator<RouteRequest> > const&, std::vector<int, std::allocator<int> >&)
+                          |          
+                           --43.90%--shortest_path_bfs(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, RouteRequest const&, std::vector<int, std::allocator<int> >&)
+                                     |          
+                                      --4.82%--el0t_64_sync
+                                                el0t_64_sync_handler
+                                                el0_da
+                                                |          
+                                                 --4.54%--do_mem_abort
+                                                           |          
+                                                            --4.53%--do_translation_fault
+                                                                      |          
+                                                                       --4.51%--do_page_fault
+                                                                                 |          
+                                                                                  --4.10%--handle_mm_fault
+                                                                                            |          
+                                                                                             --3.98%--__handle_mm_fault
+                                                                                                       |          
+                                                                                                        --3.93%--handle_pte_fault
+                                                                                                                  |          
+                                                                                                                   --3.79%--do_anonymous_page
+                                                                                                                             |          
+                                                                                                                             |--2.31%--alloc_anon_folio
+                                                                                                                             |          |          
+                                                                                                                             |           --1.82%--vma_alloc_zeroed_movable_folio
+                                                                                                                             |                     |          
+                                                                                                                             |                      --1.79%--vma_alloc_folio_noprof
+                                                                                                                             |                                |          
+                                                                                                                             |                                 --1.75%--folio_alloc_mpol_noprof
+                                                                                                                             |                                           alloc_pages_mpol
+                                                                                                                             |                                           |          
+                                                                                                                             |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                                                                             |                                                      |          
+                                                                                                                             |                                                       --1.62%--get_page_from_freelist
+                                                                                                                             |                                                                 |          
+                                                                                                                             |                                                                  --1.24%--__pi_clear_page
+                                                                                                                             |          
+                                                                                                                              --0.56%--folio_add_lru_vma
+                                                                                                                                        folio_add_lru
+                                                                                                                                        |          
+                                                                                                                                         --0.54%--__folio_batch_add_and_move
+                                                                                                                                                   folio_batch_move_lru
+
+   100.00%     0.00%  grid_bfs  grid_bfs             [.] main
+            |
+            ---main
+               |          
+               |--56.03%--compute_congestion_pressure(std::vector<int, std::allocator<int> > const&, int, int, int)
+               |          |          
+               |           --20.58%--next_pressure_value(int, int, int, int, int, int, int, int, int)
+               |          
+                --43.91%--run_all_requests(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<RouteRequest, std::allocator<RouteRequest> > const&, std::vector<int, std::allocator<int> >&)
+                          |          
+                           --43.90%--shortest_path_bfs(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, RouteRequest const&, std::vector<int, std::allocator<int> >&)
+                                     |          
+                                      --4.82%--el0t_64_sync
+                                                el0t_64_sync_handler
+                                                el0_da
+                                                |          
+                                                 --4.54%--do_mem_abort
+                                                           |          
+                                                            --4.53%--do_translation_fault
+                                                                      |          
+                                                                       --4.51%--do_page_fault
+                                                                                 |          
+                                                                                  --4.10%--handle_mm_fault
+                                                                                            |          
+                                                                                             --3.98%--__handle_mm_fault
+                                                                                                       |          
+                                                                                                        --3.93%--handle_pte_fault
+                                                                                                                  |          
+                                                                                                                   --3.79%--do_anonymous_page
+                                                                                                                             |          
+                                                                                                                             |--2.31%--alloc_anon_folio
+                                                                                                                             |          |          
+                                                                                                                             |           --1.82%--vma_alloc_zeroed_movable_folio
+                                                                                                                             |                     |          
+                                                                                                                             |                      --1.79%--vma_alloc_folio_noprof
+                                                                                                                             |                                |          
+                                                                                                                             |                                 --1.75%--folio_alloc_mpol_noprof
+                                                                                                                             |                                           alloc_pages_mpol
+                                                                                                                             |                                           |          
+                                                                                                                             |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                                                                             |                                                      |          
+                                                                                                                             |                                                       --1.62%--get_page_from_freelist
+                                                                                                                             |                                                                 |          
+                                                                                                                             |                                                                  --1.24%--__pi_clear_page
+                                                                                                                             |          
+                                                                                                                              --0.56%--folio_add_lru_vma
+                                                                                                                                        folio_add_lru
+                                                                                                                                        |          
+                                                                                                                                         --0.54%--__folio_batch_add_and_move
+                                                                                                                                                   folio_batch_move_lru
+
+    56.03%    35.45%  grid_bfs  grid_bfs             [.] compute_congestion_pressure(std::vector<int, std::allocator<int> > const&, int, int, int)
+            |          
+            |--35.45%--_start
+            |          __libc_start_main@@GLIBC_2.34
+            |          __libc_start_call_main
+            |          main
+            |          compute_congestion_pressure(std::vector<int, std::allocator<int> > const&, int, int, int)
+            |          
+             --20.58%--compute_congestion_pressure(std::vector<int, std::allocator<int> > const&, int, int, int)
+                       next_pressure_value(int, int, int, int, int, int, int, int, int)
+
+    43.91%     0.00%  grid_bfs  grid_bfs             [.] run_all_requests(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<RouteRequest, std::allocator<RouteRequest> > const&, std::vector<int, std::allocator<int> >&)
+            |
+            ---run_all_requests(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<RouteRequest, std::allocator<RouteRequest> > const&, std::vector<int, std::allocator<int> >&)
+               |          
+                --43.90%--shortest_path_bfs(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, RouteRequest const&, std::vector<int, std::allocator<int> >&)
+                          |          
+                           --4.82%--el0t_64_sync
+                                     el0t_64_sync_handler
+                                     el0_da
+                                     |          
+                                      --4.54%--do_mem_abort
+                                                |          
+                                                 --4.53%--do_translation_fault
+                                                           |          
+                                                            --4.51%--do_page_fault
+                                                                      |          
+                                                                       --4.10%--handle_mm_fault
+                                                                                 |          
+                                                                                  --3.98%--__handle_mm_fault
+                                                                                            |          
+                                                                                             --3.93%--handle_pte_fault
+                                                                                                       |          
+                                                                                                        --3.79%--do_anonymous_page
+                                                                                                                  |          
+                                                                                                                  |--2.31%--alloc_anon_folio
+                                                                                                                  |          |          
+                                                                                                                  |           --1.82%--vma_alloc_zeroed_movable_folio
+                                                                                                                  |                     |          
+                                                                                                                  |                      --1.79%--vma_alloc_folio_noprof
+                                                                                                                  |                                |          
+                                                                                                                  |                                 --1.75%--folio_alloc_mpol_noprof
+                                                                                                                  |                                           alloc_pages_mpol
+                                                                                                                  |                                           |          
+                                                                                                                  |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                                                                  |                                                      |          
+                                                                                                                  |                                                       --1.62%--get_page_from_freelist
+                                                                                                                  |                                                                 |          
+                                                                                                                  |                                                                  --1.24%--__pi_clear_page
+                                                                                                                  |          
+                                                                                                                   --0.56%--folio_add_lru_vma
+                                                                                                                             folio_add_lru
+                                                                                                                             |          
+                                                                                                                              --0.54%--__folio_batch_add_and_move
+                                                                                                                                        folio_batch_move_lru
+
+    43.90%    38.56%  grid_bfs  grid_bfs             [.] shortest_path_bfs(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, RouteRequest const&, std::vector<int, std::allocator<int> >&)
+            |          
+            |--38.56%--_start
+            |          __libc_start_main@@GLIBC_2.34
+            |          __libc_start_call_main
+            |          main
+            |          run_all_requests(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<RouteRequest, std::allocator<RouteRequest> > const&, std::vector<int, std::allocator<int> >&)
+            |          shortest_path_bfs(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, RouteRequest const&, std::vector<int, std::allocator<int> >&)
+            |          
+             --5.34%--shortest_path_bfs(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, RouteRequest const&, std::vector<int, std::allocator<int> >&)
+                       |          
+                        --4.82%--el0t_64_sync
+                                  el0t_64_sync_handler
+                                  el0_da
+                                  |          
+                                   --4.54%--do_mem_abort
+                                             |          
+                                              --4.53%--do_translation_fault
+                                                        |          
+                                                         --4.51%--do_page_fault
+                                                                   |          
+                                                                    --4.10%--handle_mm_fault
+                                                                              |          
+                                                                               --3.98%--__handle_mm_fault
+                                                                                         |          
+                                                                                          --3.93%--handle_pte_fault
+                                                                                                    |          
+                                                                                                     --3.79%--do_anonymous_page
+                                                                                                               |          
+                                                                                                               |--2.31%--alloc_anon_folio
+                                                                                                               |          |          
+                                                                                                               |           --1.82%--vma_alloc_zeroed_movable_folio
+                                                                                                               |                     |          
+                                                                                                               |                      --1.79%--vma_alloc_folio_noprof
+                                                                                                               |                                |          
+                                                                                                               |                                 --1.75%--folio_alloc_mpol_noprof
+                                                                                                               |                                           alloc_pages_mpol
+                                                                                                               |                                           |          
+                                                                                                               |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                                                               |                                                      |          
+                                                                                                               |                                                       --1.62%--get_page_from_freelist
+                                                                                                               |                                                                 |          
+                                                                                                               |                                                                  --1.24%--__pi_clear_page
+                                                                                                               |          
+                                                                                                                --0.56%--folio_add_lru_vma
+                                                                                                                          folio_add_lru
+                                                                                                                          |          
+                                                                                                                           --0.54%--__folio_batch_add_and_move
+                                                                                                                                     folio_batch_move_lru
+
+    20.58%    20.58%  grid_bfs  grid_bfs             [.] next_pressure_value(int, int, int, int, int, int, int, int, int)
+            |
+            ---_start
+               __libc_start_main@@GLIBC_2.34
+               __libc_start_call_main
+               main
+               compute_congestion_pressure(std::vector<int, std::allocator<int> > const&, int, int, int)
+               next_pressure_value(int, int, int, int, int, int, int, int, int)
+
+     5.02%     0.00%  grid_bfs  [kernel.kallsyms]    [k] el0t_64_sync
+            |
+            ---el0t_64_sync
+               el0t_64_sync_handler
+               |          
+                --4.95%--el0_da
+                          |          
+                           --4.67%--do_mem_abort
+                                     |          
+                                      --4.66%--do_translation_fault
+                                                |          
+                                                 --4.64%--do_page_fault
+                                                           |          
+                                                            --4.23%--handle_mm_fault
+                                                                      |          
+                                                                       --4.11%--__handle_mm_fault
+                                                                                 |          
+                                                                                  --4.04%--handle_pte_fault
+                                                                                            |          
+                                                                                             --3.91%--do_anonymous_page
+                                                                                                       |          
+                                                                                                       |--2.36%--alloc_anon_folio
+                                                                                                       |          |          
+                                                                                                       |           --1.85%--vma_alloc_zeroed_movable_folio
+                                                                                                       |                     |          
+                                                                                                       |                      --1.82%--vma_alloc_folio_noprof
+                                                                                                       |                                |          
+                                                                                                       |                                 --1.76%--folio_alloc_mpol_noprof
+                                                                                                       |                                           alloc_pages_mpol
+                                                                                                       |                                           |          
+                                                                                                       |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                                                       |                                                      |          
+                                                                                                       |                                                       --1.63%--get_page_from_freelist
+                                                                                                       |                                                                 |          
+                                                                                                       |                                                                  --1.24%--__pi_clear_page
+                                                                                                       |          
+                                                                                                        --0.60%--folio_add_lru_vma
+                                                                                                                  folio_add_lru
+                                                                                                                  |          
+                                                                                                                   --0.59%--__folio_batch_add_and_move
+                                                                                                                             |          
+                                                                                                                              --0.57%--folio_batch_move_lru
+
+     5.02%     0.00%  grid_bfs  [kernel.kallsyms]    [k] el0t_64_sync_handler
+            |
+            ---el0t_64_sync_handler
+               |          
+                --4.95%--el0_da
+                          |          
+                           --4.67%--do_mem_abort
+                                     |          
+                                      --4.66%--do_translation_fault
+                                                |          
+                                                 --4.64%--do_page_fault
+                                                           |          
+                                                            --4.23%--handle_mm_fault
+                                                                      |          
+                                                                       --4.11%--__handle_mm_fault
+                                                                                 |          
+                                                                                  --4.04%--handle_pte_fault
+                                                                                            |          
+                                                                                             --3.91%--do_anonymous_page
+                                                                                                       |          
+                                                                                                       |--2.36%--alloc_anon_folio
+                                                                                                       |          |          
+                                                                                                       |           --1.85%--vma_alloc_zeroed_movable_folio
+                                                                                                       |                     |          
+                                                                                                       |                      --1.82%--vma_alloc_folio_noprof
+                                                                                                       |                                |          
+                                                                                                       |                                 --1.76%--folio_alloc_mpol_noprof
+                                                                                                       |                                           alloc_pages_mpol
+                                                                                                       |                                           |          
+                                                                                                       |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                                                       |                                                      |          
+                                                                                                       |                                                       --1.63%--get_page_from_freelist
+                                                                                                       |                                                                 |          
+                                                                                                       |                                                                  --1.24%--__pi_clear_page
+                                                                                                       |          
+                                                                                                        --0.60%--folio_add_lru_vma
+                                                                                                                  folio_add_lru
+                                                                                                                  |          
+                                                                                                                   --0.59%--__folio_batch_add_and_move
+                                                                                                                             |          
+                                                                                                                              --0.57%--folio_batch_move_lru
+
+     4.95%     0.28%  grid_bfs  [kernel.kallsyms]    [k] el0_da
+            |          
+             --4.67%--el0_da
+                       do_mem_abort
+                       |          
+                        --4.66%--do_translation_fault
+                                  |          
+                                   --4.64%--do_page_fault
+                                             |          
+                                              --4.23%--handle_mm_fault
+                                                        |          
+                                                         --4.11%--__handle_mm_fault
+                                                                   |          
+                                                                    --4.04%--handle_pte_fault
+                                                                              |          
+                                                                               --3.91%--do_anonymous_page
+                                                                                         |          
+                                                                                         |--2.36%--alloc_anon_folio
+                                                                                         |          |          
+                                                                                         |           --1.85%--vma_alloc_zeroed_movable_folio
+                                                                                         |                     |          
+                                                                                         |                      --1.82%--vma_alloc_folio_noprof
+                                                                                         |                                |          
+                                                                                         |                                 --1.76%--folio_alloc_mpol_noprof
+                                                                                         |                                           alloc_pages_mpol
+                                                                                         |                                           |          
+                                                                                         |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                                         |                                                      |          
+                                                                                         |                                                       --1.63%--get_page_from_freelist
+                                                                                         |                                                                 |          
+                                                                                         |                                                                  --1.24%--__pi_clear_page
+                                                                                         |          
+                                                                                          --0.60%--folio_add_lru_vma
+                                                                                                    folio_add_lru
+                                                                                                    |          
+                                                                                                     --0.59%--__folio_batch_add_and_move
+                                                                                                               |          
+                                                                                                                --0.57%--folio_batch_move_lru
+
+     4.67%     0.01%  grid_bfs  [kernel.kallsyms]    [k] do_mem_abort
+            |          
+             --4.66%--do_mem_abort
+                       do_translation_fault
+                       |          
+                        --4.64%--do_page_fault
+                                  |          
+                                   --4.23%--handle_mm_fault
+                                             |          
+                                              --4.11%--__handle_mm_fault
+                                                        |          
+                                                         --4.04%--handle_pte_fault
+                                                                   |          
+                                                                    --3.91%--do_anonymous_page
+                                                                              |          
+                                                                              |--2.36%--alloc_anon_folio
+                                                                              |          |          
+                                                                              |           --1.85%--vma_alloc_zeroed_movable_folio
+                                                                              |                     |          
+                                                                              |                      --1.82%--vma_alloc_folio_noprof
+                                                                              |                                |          
+                                                                              |                                 --1.76%--folio_alloc_mpol_noprof
+                                                                              |                                           alloc_pages_mpol
+                                                                              |                                           |          
+                                                                              |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                              |                                                      |          
+                                                                              |                                                       --1.63%--get_page_from_freelist
+                                                                              |                                                                 |          
+                                                                              |                                                                  --1.24%--__pi_clear_page
+                                                                              |          
+                                                                               --0.60%--folio_add_lru_vma
+                                                                                         folio_add_lru
+                                                                                         |          
+                                                                                          --0.59%--__folio_batch_add_and_move
+                                                                                                    |          
+                                                                                                     --0.57%--folio_batch_move_lru
+
+     4.66%     0.00%  grid_bfs  [kernel.kallsyms]    [k] do_translation_fault
+            |
+            ---do_translation_fault
+               |          
+                --4.64%--do_page_fault
+                          |          
+                           --4.23%--handle_mm_fault
+                                     |          
+                                      --4.11%--__handle_mm_fault
+                                                |          
+                                                 --4.04%--handle_pte_fault
+                                                           |          
+                                                            --3.91%--do_anonymous_page
+                                                                      |          
+                                                                      |--2.36%--alloc_anon_folio
+                                                                      |          |          
+                                                                      |           --1.85%--vma_alloc_zeroed_movable_folio
+                                                                      |                     |          
+                                                                      |                      --1.82%--vma_alloc_folio_noprof
+                                                                      |                                |          
+                                                                      |                                 --1.76%--folio_alloc_mpol_noprof
+                                                                      |                                           alloc_pages_mpol
+                                                                      |                                           |          
+                                                                      |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                      |                                                      |          
+                                                                      |                                                       --1.63%--get_page_from_freelist
+                                                                      |                                                                 |          
+                                                                      |                                                                  --1.24%--__pi_clear_page
+                                                                      |          
+                                                                       --0.60%--folio_add_lru_vma
+                                                                                 folio_add_lru
+                                                                                 |          
+                                                                                  --0.59%--__folio_batch_add_and_move
+                                                                                            |          
+                                                                                             --0.57%--folio_batch_move_lru
+
+     4.64%     0.18%  grid_bfs  [kernel.kallsyms]    [k] do_page_fault
+            |          
+             --4.46%--do_page_fault
+                       |          
+                        --4.23%--handle_mm_fault
+                                  |          
+                                   --4.11%--__handle_mm_fault
+                                             |          
+                                              --4.04%--handle_pte_fault
+                                                        |          
+                                                         --3.91%--do_anonymous_page
+                                                                   |          
+                                                                   |--2.36%--alloc_anon_folio
+                                                                   |          |          
+                                                                   |           --1.85%--vma_alloc_zeroed_movable_folio
+                                                                   |                     |          
+                                                                   |                      --1.82%--vma_alloc_folio_noprof
+                                                                   |                                |          
+                                                                   |                                 --1.76%--folio_alloc_mpol_noprof
+                                                                   |                                           alloc_pages_mpol
+                                                                   |                                           |          
+                                                                   |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                                   |                                                      |          
+                                                                   |                                                       --1.63%--get_page_from_freelist
+                                                                   |                                                                 |          
+                                                                   |                                                                  --1.24%--__pi_clear_page
+                                                                   |          
+                                                                    --0.60%--folio_add_lru_vma
+                                                                              folio_add_lru
+                                                                              |          
+                                                                               --0.59%--__folio_batch_add_and_move
+                                                                                         |          
+                                                                                          --0.57%--folio_batch_move_lru
+
+     4.23%     0.01%  grid_bfs  [kernel.kallsyms]    [k] handle_mm_fault
+            |          
+             --4.21%--handle_mm_fault
+                       |          
+                        --4.11%--__handle_mm_fault
+                                  |          
+                                   --4.04%--handle_pte_fault
+                                             |          
+                                              --3.91%--do_anonymous_page
+                                                        |          
+                                                        |--2.36%--alloc_anon_folio
+                                                        |          |          
+                                                        |           --1.85%--vma_alloc_zeroed_movable_folio
+                                                        |                     |          
+                                                        |                      --1.82%--vma_alloc_folio_noprof
+                                                        |                                |          
+                                                        |                                 --1.76%--folio_alloc_mpol_noprof
+                                                        |                                           alloc_pages_mpol
+                                                        |                                           |          
+                                                        |                                            --1.74%--__alloc_frozen_pages_noprof
+                                                        |                                                      |          
+                                                        |                                                       --1.63%--get_page_from_freelist
+                                                        |                                                                 |          
+                                                        |                                                                  --1.24%--__pi_clear_page
+                                                        |          
+                                                         --0.60%--folio_add_lru_vma
+                                                                   folio_add_lru
+                                                                   |          
+                                                                    --0.59%--__folio_batch_add_and_move
+                                                                              |          
+                                                                               --0.57%--folio_batch_move_lru
+
+     4.13%     0.06%  grid_bfs  [kernel.kallsyms]    [k] __handle_mm_fault
+            |          
+             --4.07%--__handle_mm_fault
+                       |          
+                        --4.04%--handle_pte_fault
+                                  |          
+                                   --3.91%--do_anonymous_page
+                                             |          
+                                             |--2.36%--alloc_anon_folio
+                                             |          |          
+                                             |           --1.85%--vma_alloc_zeroed_movable_folio
+                                             |                     |          
+                                             |                      --1.82%--vma_alloc_folio_noprof
+                                             |                                |          
+                                             |                                 --1.76%--folio_alloc_mpol_noprof
+                                             |                                           alloc_pages_mpol
+                                             |                                           |          
+                                             |                                            --1.74%--__alloc_frozen_pages_noprof
+                                             |                                                      |          
+                                             |                                                       --1.63%--get_page_from_freelist
+                                             |                                                                 |          
+                                             |                                                                  --1.24%--__pi_clear_page
+                                             |          
+                                              --0.60%--folio_add_lru_vma
+                                                        folio_add_lru
+                                                        |          
+                                                         --0.59%--__folio_batch_add_and_move
+                                                                   |          
+                                                                    --0.57%--folio_batch_move_lru
+
+     4.04%     0.04%  grid_bfs  [kernel.kallsyms]    [k] handle_pte_fault
+            |          
+             --3.99%--handle_pte_fault
+                       |          
+                        --3.91%--do_anonymous_page
+                                  |          
+                                  |--2.36%--alloc_anon_folio
+                                  |          |          
+                                  |           --1.85%--vma_alloc_zeroed_movable_folio
+                                  |                     |          
+                                  |                      --1.82%--vma_alloc_folio_noprof
+                                  |                                |          
+                                  |                                 --1.76%--folio_alloc_mpol_noprof
+                                  |                                           alloc_pages_mpol
+                                  |                                           |          
+                                  |                                            --1.74%--__alloc_frozen_pages_noprof
+                                  |                                                      |          
+                                  |                                                       --1.63%--get_page_from_freelist
+                                  |                                                                 |          
+                                  |                                                                  --1.24%--__pi_clear_page
+                                  |          
+                                   --0.60%--folio_add_lru_vma
+                                             folio_add_lru
+                                             |          
+                                              --0.59%--__folio_batch_add_and_move
+                                                        |          
+                                                         --0.57%--folio_batch_move_lru
+
+     3.91%     0.07%  grid_bfs  [kernel.kallsyms]    [k] do_anonymous_page
+            |          
+             --3.83%--do_anonymous_page
+                       |          
+                       |--2.36%--alloc_anon_folio
+                       |          |          
+                       |           --1.85%--vma_alloc_zeroed_movable_folio
+                       |                     |          
+                       |                      --1.82%--vma_alloc_folio_noprof
+                       |                                |          
+                       |                                 --1.76%--folio_alloc_mpol_noprof
+                       |                                           alloc_pages_mpol
+                       |                                           |          
+                       |                                            --1.74%--__alloc_frozen_pages_noprof
+                       |                                                      |          
+                       |                                                       --1.63%--get_page_from_freelist
+                       |                                                                 |          
+                       |                                                                  --1.24%--__pi_clear_page
+                       |          
+                        --0.60%--folio_add_lru_vma
+                                  folio_add_lru
+                                  |          
+                                   --0.59%--__folio_batch_add_and_move
+                                             |          
+                                              --0.57%--folio_batch_move_lru
+
+     2.36%     0.01%  grid_bfs  [kernel.kallsyms]    [k] alloc_anon_folio
+            |          
+             --2.35%--alloc_anon_folio
+                       |          
+                        --1.85%--vma_alloc_zeroed_movable_folio
+                                  |          
+                                   --1.82%--vma_alloc_folio_noprof
+                                             |          
+                                              --1.76%--folio_alloc_mpol_noprof
+                                                        alloc_pages_mpol
+                                                        |          
+                                                         --1.74%--__alloc_frozen_pages_noprof
+                                                                   |          
+                                                                    --1.63%--get_page_from_freelist
+                                                                              |          
+                                                                               --1.24%--__pi_clear_page
+
+     1.85%     0.00%  grid_bfs  [kernel.kallsyms]    [k] vma_alloc_zeroed_movable_folio
+            |
+            ---vma_alloc_zeroed_movable_folio
+               |          
+                --1.82%--vma_alloc_folio_noprof
+                          |          
+                           --1.76%--folio_alloc_mpol_noprof
+                                     alloc_pages_mpol
+                                     |          
+                                      --1.74%--__alloc_frozen_pages_noprof
+                                                |          
+                                                 --1.63%--get_page_from_freelist
+                                                           |          
+                                                            --1.24%--__pi_clear_page
+
+     1.82%     0.00%  grid_bfs  [kernel.kallsyms]    [k] vma_alloc_folio_noprof
+            |
+            ---vma_alloc_folio_noprof
+               |          
+                --1.76%--folio_alloc_mpol_noprof
+                          alloc_pages_mpol
+                          |          
+                           --1.74%--__alloc_frozen_pages_noprof
+                                     |          
+                                      --1.63%--get_page_from_freelist
+                                                |          
+                                                 --1.24%--__pi_clear_page
+
+     1.79%     0.03%  grid_bfs  [kernel.kallsyms]    [k] folio_alloc_mpol_noprof
+            |          
+             --1.76%--folio_alloc_mpol_noprof
+                       alloc_pages_mpol
+                       |          
+                        --1.74%--__alloc_frozen_pages_noprof
+                                  |          
+                                   --1.63%--get_page_from_freelist
+                                             |          
+                                              --1.24%--__pi_clear_page
+
+     1.77%     0.00%  grid_bfs  [kernel.kallsyms]    [k] alloc_pages_mpol
+            |
+            ---alloc_pages_mpol
+               |          
+                --1.76%--__alloc_frozen_pages_noprof
+                          |          
+                           --1.64%--get_page_from_freelist
+                                     |          
+                                      --1.26%--__pi_clear_page
+
+     1.76%     0.06%  grid_bfs  [kernel.kallsyms]    [k] __alloc_frozen_pages_noprof
+            |          
+             --1.70%--__alloc_frozen_pages_noprof
+                       |          
+                        --1.64%--get_page_from_freelist
+                                  |          
+                                   --1.26%--__pi_clear_page
+
+     1.66%     0.04%  grid_bfs  [kernel.kallsyms]    [k] get_page_from_freelist
+            |          
+             --1.61%--get_page_from_freelist
+                       |          
+                        --1.26%--__pi_clear_page
+
+     1.26%     1.26%  grid_bfs  [kernel.kallsyms]    [k] __pi_clear_page
+            |
+            ---_start
+               __libc_start_main@@GLIBC_2.34
+               __libc_start_call_main
+               main
+               |          
+                --1.25%--run_all_requests(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<RouteRequest, std::allocator<RouteRequest> > const&, std::vector<int, std::allocator<int> >&)
+                          shortest_path_bfs(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, RouteRequest const&, std::vector<int, std::allocator<int> >&)
+                          |          
+                           --1.24%--el0t_64_sync
+                                     el0t_64_sync_handler
+                                     el0_da
+                                     do_mem_abort
+                                     do_translation_fault
+                                     do_page_fault
+                                     handle_mm_fault
+                                     __handle_mm_fault
+                                     handle_pte_fault
+                                     do_anonymous_page
+                                     alloc_anon_folio
+                                     vma_alloc_zeroed_movable_folio
+                                     vma_alloc_folio_noprof
+                                     folio_alloc_mpol_noprof
+                                     alloc_pages_mpol
+                                     __alloc_frozen_pages_noprof
+                                     get_page_from_freelist
+                                     __pi_clear_page
+
+     0.62%     0.01%  grid_bfs  [kernel.kallsyms]    [k] folio_add_lru_vma
+            |          
+             --0.60%--folio_add_lru_vma
+                       folio_add_lru
+                       |          
+                        --0.59%--__folio_batch_add_and_move
+                                  |          
+                                   --0.57%--folio_batch_move_lru
+
+     0.60%     0.01%  grid_bfs  [kernel.kallsyms]    [k] folio_add_lru
+            |          
+             --0.59%--folio_add_lru
+                       __folio_batch_add_and_move
+                       |          
+                        --0.57%--folio_batch_move_lru
+
+     0.59%     0.01%  grid_bfs  [kernel.kallsyms]    [k] __folio_batch_add_and_move
+            |          
+             --0.57%--__folio_batch_add_and_move
+                       folio_batch_move_lru
+
+     0.57%     0.54%  grid_bfs  [kernel.kallsyms]    [k] folio_batch_move_lru
+            |          
+             --0.54%--_start
+                       __libc_start_main@@GLIBC_2.34
+                       __libc_start_call_main
+                       main
+                       run_all_requests(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, std::vector<RouteRequest, std::allocator<RouteRequest> > const&, std::vector<int, std::allocator<int> >&)
+                       shortest_path_bfs(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, RouteRequest const&, std::vector<int, std::allocator<int> >&)
+                       |          
+                        --0.52%--el0t_64_sync
+                                  el0t_64_sync_handler
+                                  el0_da
+                                  do_mem_abort
+                                  do_translation_fault
+                                  do_page_fault
+                                  handle_mm_fault
+                                  __handle_mm_fault
+                                  handle_pte_fault
+                                  do_anonymous_page
+                                  folio_add_lru_vma
+                                  folio_add_lru
+                                  __folio_batch_add_and_move
+                                  folio_batch_move_lru
+
+     0.47%     0.07%  grid_bfs  [kernel.kallsyms]    [k] __mem_cgroup_charge
+     0.47%     0.47%  grid_bfs  [kernel.kallsyms]    [k] __pte_offset_map_lock
+     0.35%     0.01%  grid_bfs  [kernel.kallsyms]    [k] folio_add_new_anon_rmap
+     0.34%     0.07%  grid_bfs  [kernel.kallsyms]    [k] rmqueue.isra.0
+     0.32%     0.01%  grid_bfs  [kernel.kallsyms]    [k] __folio_mod_stat
+     0.31%     0.00%  grid_bfs  [kernel.kallsyms]    [k] charge_memcg
+     0.30%     0.29%  grid_bfs  libc.so.6            [.] __memset_zva64
+     0.28%     0.18%  grid_bfs  [kernel.kallsyms]    [k] __lruvec_stat_mod_folio
+     0.25%     0.25%  grid_bfs  [kernel.kallsyms]    [k] memcg1_commit_charge
+     0.22%     0.06%  grid_bfs  [kernel.kallsyms]    [k] __rmqueue_pcplist
+     0.22%     0.00%  grid_bfs  libstdc++.so.6.0.33  [.] operator new(unsigned long)
+     0.22%     0.01%  grid_bfs  libc.so.6            [.] malloc
+     0.21%     0.00%  grid_bfs  libc.so.6            [.] _int_malloc
+     0.19%     0.01%  grid_bfs  [kernel.kallsyms]    [k] lock_vma_under_rcu
+     0.19%     0.01%  grid_bfs  libc.so.6            [.] sysmalloc
+     0.16%     0.16%  grid_bfs  [kernel.kallsyms]    [k] rmqueue_bulk
+     0.13%     0.13%  grid_bfs  [kernel.kallsyms]    [k] mas_walk
+     0.09%     0.07%  grid_bfs  [kernel.kallsyms]    [k] mod_memcg_lruvec_state
+     0.09%     0.09%  grid_bfs  [kernel.kallsyms]    [k] get_mem_cgroup_from_mm
+     0.07%     0.07%  grid_bfs  [kernel.kallsyms]    [k] try_charge_memcg
+     0.07%     0.03%  grid_bfs  [kernel.kallsyms]    [k] el0_svc
+     0.07%     0.03%  grid_bfs  [kernel.kallsyms]    [k] memcg_rstat_updated.part.0
+     0.07%     0.01%  grid_bfs  [kernel.kallsyms]    [k] count_memcg_events
+     0.06%     0.06%  grid_bfs  [kernel.kallsyms]    [k] vma_start_read
+     0.06%     0.00%  grid_bfs  libc.so.6            [.] __default_morecore@GLIBC_2.17
+     0.06%     0.00%  grid_bfs  libc.so.6            [.] __sbrk
+     0.06%     0.00%  grid_bfs  libc.so.6            [.] __brk
+     0.06%     0.06%  grid_bfs  [kernel.kallsyms]    [k] css_rstat_updated
+     0.06%     0.06%  grid_bfs  [kernel.kallsyms]    [k] zone_statistics
+     0.06%     0.04%  grid_bfs  [kernel.kallsyms]    [k] pte_offset_map_rw_nolock
+     0.06%     0.03%  grid_bfs  [kernel.kallsyms]    [k] get_vma_policy
+     0.04%     0.00%  grid_bfs  [kernel.kallsyms]    [k] do_el0_svc
+     0.04%     0.00%  grid_bfs  [kernel.kallsyms]    [k] el0_svc_common.constprop.0
+     0.04%     0.00%  grid_bfs  [kernel.kallsyms]    [k] invoke_syscall
+     0.04%     0.04%  grid_bfs  [kernel.kallsyms]    [k] __mod_node_page_state
+     0.03%     0.03%  grid_bfs  [kernel.kallsyms]    [k] folios_put_refs
+     0.03%     0.03%  grid_bfs  [kernel.kallsyms]    [k] get_task_policy.part.0
+     0.03%     0.00%  grid_bfs  [kernel.kallsyms]    [k] __arm64_sys_brk
+     0.03%     0.00%  grid_bfs  [kernel.kallsyms]    [k] __do_sys_brk
+     0.03%     0.00%  grid_bfs  [kernel.kallsyms]    [k] do_brk_flags
+     0.03%     0.03%  grid_bfs  [kernel.kallsyms]    [k] post_alloc_hook
+     0.03%     0.03%  grid_bfs  [kernel.kallsyms]    [k] percpu_ref_get_many
+     0.03%     0.03%  grid_bfs  [kernel.kallsyms]    [k] rcu_all_qs
+     0.03%     0.00%  grid_bfs  [kernel.kallsyms]    [k] __cond_resched
+     0.02%     0.00%  grid_bfs  grid_bfs             [.] generate_grid[abi:cxx11](int, int)
+     0.02%     0.00%  grid_bfs  grid_bfs             [.] int std::uniform_int_distribution<int>::operator()<std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul> >(std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>&, std::uniform_int_distribution<int>::param_type const&) [clone .isra.0]
+     0.02%     0.00%  grid_bfs  grid_bfs             [.] std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::operator()()
+     0.01%     0.01%  grid_bfs  grid_bfs             [.] summarize_heatmap(std::vector<int, std::allocator<int> > const&, int, int)
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] __set_ptes_anysz.constprop.0
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] tty_insert_flip_string_and_push_buffer
+     0.01%     0.00%  grid_bfs  grid_bfs             [.] print_summary(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > > const&, RunSummary const&, HeatmapSummary const&, CongestionSummary const&, int, double)
+     0.01%     0.00%  grid_bfs  libstdc++.so.6.0.33  [.] std::ostream::put(char)
+     0.01%     0.00%  grid_bfs  libc.so.6            [.] _IO_file_overflow@@GLIBC_2.17
+     0.01%     0.00%  grid_bfs  libc.so.6            [.] _IO_do_write@@GLIBC_2.17
+     0.01%     0.00%  grid_bfs  libc.so.6            [.] new_do_write
+     0.01%     0.00%  grid_bfs  libc.so.6            [.] _IO_file_write@@GLIBC_2.17
+     0.01%     0.00%  grid_bfs  libc.so.6            [.] __GI___libc_write
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] __arm64_sys_write
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] ksys_write
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] vfs_write
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] tty_write
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] file_tty_write.isra.0
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] iterate_tty_write
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] n_tty_write
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] process_output_block
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] pty_write
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] memset
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] fault_from_pkey
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] cap_vm_enough_memory
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] __pte_alloc
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] alloc_pages_noprof
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] alloc_frozen_pages_noprof
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] percpu_counter_add_batch
+     0.01%     0.01%  grid_bfs  grid_bfs             [.] format_route_label[abi:cxx11](RouteRequest const&, int)
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] mem_cgroup_from_task
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] __vma_start_write
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] vma_merge_new_range
+     0.01%     0.00%  grid_bfs  [kernel.kallsyms]    [k] vma_expand
+     0.01%     0.01%  grid_bfs  libc.so.6            [.] alloc_perturb
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] vmf_pte_changed
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] ___pte_offset_map
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] __pi_memset_generic
+     0.01%     0.01%  grid_bfs  [kernel.kallsyms]    [k] page_ref_add
+     0.01%     0.01%  grid_bfs  grid_bfs             [.] std::mersenne_twister_engine<unsigned long, 32ul, 624ul, 397ul, 31ul, 2567483615ul, 11ul, 4294967295ul, 7ul, 2636928640ul, 15ul, 4022730752ul, 18ul, 1812433253ul>::_M_gen_rand()
+     0.00%     0.00%  grid_bfs  [kernel.kallsyms]    [k] handle_softirqs
+     0.00%     0.00%  grid_bfs  [kernel.kallsyms]    [k] el0t_64_irq
+     0.00%     0.00%  grid_bfs  [kernel.kallsyms]    [k] el0t_64_irq_handler
+     0.00%     0.00%  grid_bfs  [kernel.kallsyms]    [k] __el0_irq_handler_common
+     0.00%     0.00%  grid_bfs  [kernel.kallsyms]    [k] el0_interrupt
+     0.00%     0.00%  grid_bfs  [kernel.kallsyms]    [k] irq_exit_rcu
+     0.00%     0.00%  grid_bfs  [kernel.kallsyms]    [k] __irq_exit_rcu
+     0.00%     0.00%  grid_bfs  [kernel.kallsyms]    [k] do_softirq_own_stack
+     0.00%     0.00%  grid_bfs  [kernel.kallsyms]    [k] call_on_irq_stack
+     0.00%     0.00%  grid_bfs  [kernel.kallsyms]    [k] ____do_softirq
+     0.00%     0.00%  grid_bfs  [kernel.kallsyms]    [k] __do_softirq
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] perf_event_enable_on_exec
+     0.00%     0.00%  perf-exe  [unknown]            [k] 0x0000ffd0753ade0c
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] el0t_64_sync
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] el0t_64_sync_handler
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] el0_svc
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] do_el0_svc
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] el0_svc_common.constprop.0
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] invoke_syscall
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] __arm64_sys_execve
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] do_execveat_common.isra.0
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] bprm_execve
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] bprm_execve.part.0
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] exec_binprm
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] load_elf_binary
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] begin_new_exec
+     0.00%     0.00%  perf-exe  [kernel.kallsyms]    [k] perf_event_exec
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

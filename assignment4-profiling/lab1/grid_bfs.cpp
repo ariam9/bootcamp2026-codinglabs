@@ -191,14 +191,17 @@ uint64_t checksum_label(const string &label) {
 // std::vector<unsigned char> visited(kRows*kCols);
 // vector<Point> frontier(kRows*kCols);
 
-std::array<int, kRows*kCols> distances{-1};
-std::array<unsigned char, kRows*kCols> visited{};
-std::array<Point, kRows*kCols> frontier{};
+std::array<int, kRows*kCols> distances;
+std::array<unsigned char, kRows*kCols> visited;
+std::array<Point, kRows*kCols> frontier;
 
 int shortest_path_bfs(const vector<string> &grid, const RouteRequest &request,
                       vector<int> &heatmap) {
     int rows = kRows;
     int cols = kCols;
+
+    //only visited needs to be reset, distances is only read after assignment of value
+    std::fill(visited.begin(), visited.end(), 0);
     
     size_t frontier_head = 0;
     size_t frontier_tail = 0;

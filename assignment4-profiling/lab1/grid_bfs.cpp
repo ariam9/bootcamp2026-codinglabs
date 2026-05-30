@@ -191,6 +191,7 @@ uint64_t checksum_label(const string &label) {
 // std::vector<unsigned char> visited(kRows*kCols);
 // vector<Point> frontier(kRows*kCols);
 
+//pull out arrays as globals(into .bss instead of repeated allocations on the heap)
 std::array<int, kRows*kCols> distances;
 std::array<unsigned char, kRows*kCols> visited;
 std::array<Point, kRows*kCols> frontier;
@@ -331,15 +332,44 @@ HeatmapSummary summarize_heatmap(const vector<int> &heatmap, int rows, int cols)
 int next_pressure_value(int center, int north, int south, int west, int east,
                         int source, int row, int col, int pass) {
     int pulse = (row * 17 + col * 31 + pass * 13) & 15;
-    int pressure = (center * 2 + north + south + west + east + source + pulse) / 8;
 
-    if (((center + row + pass) & 7) == 0) {
-        pressure = pressure / 2 + source;
-    } else {
-        pressure += center & 3;
-    }
+    //replace /8 with >>3, since pressure is unsigned here in value
+    int pressure = (center * 2 + north + south + west + east + source + pulse) >> 3;
+
+    // if (((center + row + pass) & 7) == 0) {
+    //     pressure = pressure / 2 + source;
+    // } else {
+    //     pressure += center & 3;
+    // }
+
+    //replacing with ternary
+    //replacing /2 with >>1
+    pressure = (((center + row + pass) & 7) == 0) ? (pressure >> 1) + source : pressure + (center & 3);
 
     return min(pressure, 8191);
+}
+
+//hopefully vectorisable helper for compute_congestion_pressure
+//adding restrict to let compiler know these don't overlap - hopefully it autovectorises
+static void one_pass(int rows, int cols, int pass,
+                    const int* __restrict__ curr,
+                    int* __restrict__ nxt,
+                    const int* __restrict__ src) {
+    //switch column-major for row-major
+    for (int row = 1; row < rows - 1; ++row) {
+        for (int col = 1; col < cols - 1; ++col) {
+            int index = row * cols + col;
+
+            int center = curr[index];
+            int north = curr[index - cols];
+            int south = curr[index + cols];
+            int west = curr[index - 1];
+            int east = curr[index + 1];
+
+            nxt[index] = next_pressure_value(center, north, south, west, east,
+                                                src[index], row, col, pass);
+        }
+    }
 }
 
 /**
@@ -357,25 +387,12 @@ CongestionSummary compute_congestion_pressure(const vector<int> &heatmap,
     vector<int> source(heatmap.size());
 
     for (size_t i = 0; i < heatmap.size(); ++i) {
-        source[i] = heatmap[i] / 8;
+        //switching /8 with >>3
+        source[i] = heatmap[i] >> 3;
     }
 
     for (int pass = 0; pass < congestion_passes; ++pass) {
-        for (int row = 1; row < rows - 1; ++row) {
-            for (int col = 1; col < cols - 1; ++col) {
-                int index = row * cols + col;
-
-                int center = current[index];
-                int north = current[index - cols];
-                int south = current[index + cols];
-                int west = current[index - 1];
-                int east = current[index + 1];
-
-                next[index] = next_pressure_value(center, north, south, west, east,
-                                                  source[index], row, col, pass);
-            }
-        }
-
+        one_pass(rows, cols, pass, current.data(), next.data(), source.data());
         current.swap(next);
     }
 

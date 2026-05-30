@@ -197,8 +197,8 @@ std::array<Point, kRows*kCols> frontier;
 
 int shortest_path_bfs(const vector<string> &grid, const RouteRequest &request,
                       vector<int> &heatmap) {
-    int rows = kRows;
-    int cols = kCols;
+    int rows = static_cast<int>(grid.size());
+    int cols = static_cast<int>(grid[0].size());
 
     //only visited needs to be reset, distances is only read after assignment of value
     std::fill(visited.begin(), visited.end(), 0);

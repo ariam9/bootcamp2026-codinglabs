@@ -187,15 +187,15 @@ uint64_t checksum_label(const string &label) {
  *
  * The function returns -1 when the goal cannot be reached.
  */
+std::vector<int> distances(kRows*kCols, -1);
+std::vector<unsigned char> visited(kRows*kCols);
+vector<Point> frontier(kRows*kCols);
+
 int shortest_path_bfs(const vector<string> &grid, const RouteRequest &request,
                       vector<int> &heatmap) {
-    int rows = static_cast<int>(grid.size());
-    int cols = static_cast<int>(grid[0].size());
-    int total = rows * cols;
-
-    std::vector<int> distance(total, -1);
-    std::vector<unsigned char> visited(total);
-    vector<Point> frontier(static_cast<size_t>(total));
+    int rows = kRows;
+    int cols = kCols;
+    
     size_t frontier_head = 0;
     size_t frontier_tail = 0;
 
@@ -203,7 +203,7 @@ int shortest_path_bfs(const vector<string> &grid, const RouteRequest &request,
     int goal_index = request.goal.row * cols + request.goal.col;
 
     visited[start_index] = 1;
-    distance[start_index] = 0;
+    distances[start_index] = 0;
     heatmap[start_index] += 1;
     frontier[frontier_tail++] = request.start;
 
@@ -215,7 +215,7 @@ int shortest_path_bfs(const vector<string> &grid, const RouteRequest &request,
 
         int current_index = current.row * cols + current.col;
         if (current_index == goal_index) {
-            return distance[current_index];
+            return distances[current_index];
         }
 
         for (int direction = 0; direction < 4; ++direction) {
@@ -235,7 +235,7 @@ int shortest_path_bfs(const vector<string> &grid, const RouteRequest &request,
             }
 
             visited[next_index] = 1;
-            distance[next_index] = distance[current_index] + 1;
+            distances[next_index] = distances[current_index] + 1;
             heatmap[next_index] += 1;
             frontier[frontier_tail++] = {next_row, next_col};
         }

@@ -187,9 +187,13 @@ uint64_t checksum_label(const string &label) {
  *
  * The function returns -1 when the goal cannot be reached.
  */
-std::vector<int> distances(kRows*kCols, -1);
-std::vector<unsigned char> visited(kRows*kCols);
-vector<Point> frontier(kRows*kCols);
+// std::vector<int> distances(kRows*kCols, -1);
+// std::vector<unsigned char> visited(kRows*kCols);
+// vector<Point> frontier(kRows*kCols);
+
+std::array<int, kRows*kCols> distances{-1};
+std::array<unsigned char, kRows*kCols> visited{};
+std::array<Point, kRows*kCols> frontier{};
 
 int shortest_path_bfs(const vector<string> &grid, const RouteRequest &request,
                       vector<int> &heatmap) {
